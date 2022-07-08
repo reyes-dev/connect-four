@@ -1,4 +1,3 @@
-require 'pp'
 # A Piece object will be created to fill in a spot in the Board each turn
 # Checkers are X and O
 class Piece
@@ -38,4 +37,4 @@ class Board
 end
 
 board = Board.new
-board.display_board
+puts board.board[1][:g]

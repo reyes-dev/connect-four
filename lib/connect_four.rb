@@ -42,6 +42,7 @@ class UpdateBoard
 
   def initialize
     @choice = ""
+    @i = 1
   end
 # pick_column takes a choice between a-g and stores it for later use
   def pick_column
@@ -51,12 +52,14 @@ class UpdateBoard
       break if @choice.match?(/^[a-g]$/)
     end
   end
+# helper method for drop_checker
+  def increment_row(board)
+    @i = 1
+    @i = @i + 1 until board.board[@i][@choice] == '-'
+  end
 # drop_checker uses @choice to alter a single slot in the board
   def drop_checker(board, turn)
-    i = 1
-
-    i = i + 1 until board.board[i][@choice] == '-'
-
-    board.board[i][@choice] = turn
+    increment_row(board)
+    board.board[@i][@choice] = turn
   end
 end

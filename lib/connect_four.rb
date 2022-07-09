@@ -35,6 +35,18 @@ class Board
     puts "  A ☩ B ☩ C ☩ D ☩ E ☩ F ☩ G"
   end
 end
-
-board = Board.new
-puts board.board[1][:g]
+# UpdateBoard alters a Board object by first letting one pick a column 'a-g'
+# And then replacing the value of the lowest unoccupied row spot
+class UpdateBoard
+  def initialize
+    @choice = ""
+  end
+# pick_column takes a choice between a-g and stores it for later use
+  def pick_column
+    loop do
+      puts "Enter the letter of the column to drop your checker in:  "
+      @choice = gets.chomp.downcase.to_sym
+      break if @choice.match?(/^[a-g]$/)
+    end
+  end
+end

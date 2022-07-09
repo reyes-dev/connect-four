@@ -49,4 +49,8 @@ class UpdateBoard
       break if @choice.match?(/^[a-g]$/)
     end
   end
+# drop_checker uses @choice to alter a single slot in the board
+  def drop_checker(board)
+    
+  end
 end

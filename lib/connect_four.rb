@@ -38,6 +38,8 @@ end
 # UpdateBoard alters a Board object by first letting one pick a column 'a-g'
 # And then replacing the value of the lowest unoccupied row spot
 class UpdateBoard
+  attr_accessor :choice
+
   def initialize
     @choice = ""
   end
@@ -50,7 +52,11 @@ class UpdateBoard
     end
   end
 # drop_checker uses @choice to alter a single slot in the board
-  def drop_checker(board)
-    
+  def drop_checker(board, turn)
+    i = 1
+
+    i = i + 1 until board.board[i][@choice] == '-'
+
+    board.board[i][@choice] = turn
   end
 end

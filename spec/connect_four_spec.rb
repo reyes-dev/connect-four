@@ -7,15 +7,17 @@ describe UpdateBoard do
 
       it 'Replaces the value of the lowest unnocupied spot ' do
         new_board = Board.new
-        board_update.drop_checker(new_board)
+        board_update.choice = :a
+        board_update.drop_checker(new_board, 'X')
         changed_board = new_board.board[1][:a]
         expect(changed_board).to eq('X')
       end
 
       it 'Will not replace an already occupied spot' do
         new_board = Board.new
-        board_update.drop_checker(new_board)
-        board_update.drop_checker(new_board)
+        board_update.choice = :a
+        board_update.drop_checker(new_board, 'X')
+        board_update.drop_checker(new_board, 'O')
         changed_x = new_board.board[1][:a]
         changed_o = new_board.board[2][:a]
         expect(changed_x).to eq('X')

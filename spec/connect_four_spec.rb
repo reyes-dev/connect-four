@@ -23,6 +23,27 @@ describe UpdateBoard do
         expect(changed_x).to eq('X')
         expect(changed_o).to eq('O')
       end
+
+      context 'When a board column is full' do
+        subject(:column_is_full) { described_class.new }
+
+        it 'Will not change the board' do
+          new_board = Board.new
+          new_board.board = {
+            6 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
+            5 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
+            4 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
+            3 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
+            2 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
+            1 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"}
+          }
+          column_is_full.choice = :a
+          column_is_full.drop_checker(new_board, 'O')
+          changed_to_o = new_board.board[6][:a]
+          expect(changed_to_o).not_to eq('O')
+          expect(changed_to_o).to eq('X')
+        end
+      end
     end
   end
 end

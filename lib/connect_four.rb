@@ -46,12 +46,12 @@ class UpdateBoard
 # helper method for drop_checker
   def increment_row(board)
     @i = 1
-    @i = @i + 1 until board.board[@i][@choice] == '-'
+    @i = @i + 1 until board.board[@i][@choice] == '-' || @i == 6
   end
 # drop_checker uses @choice to alter a single slot in the board
   def drop_checker(board, turn)
     increment_row(board)
-    board.board[@i][@choice] = turn
+    board.board[@i][@choice] = turn unless board.board[@i][@choice] != '-'
   end
 end
 # The PlayGame class starts loop where the game is actually played
@@ -71,7 +71,7 @@ class PlayGame
       @game_over = true
     end
   end
-
+  # Checks if the board is full
   def full_board?(board)
     arr = []
     board.each { |k, v| v.each { |k, v| arr << v } }

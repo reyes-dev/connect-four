@@ -63,3 +63,19 @@ class UpdateBoard
     board.board[@i][@choice] = turn
   end
 end
+# The PlayGame class starts loop where the game is actually played
+# It holds state for whose turn it is and if the game is over or not
+class PlayGame
+  def initialize
+    @turn = 'X'
+    @game_over = false
+  end
+  # play only stops when there's a consecutive-four or a full board
+  # It calls the methods that take input, switch turn, displays board 
+  # and alters a board slot
+  def play
+    until game_over do
+      @game_over = true
+    end
+  end
+end

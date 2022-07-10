@@ -6,12 +6,12 @@ class Board
   # Each column is a letter a-g
   def initialize
     @board = {
-      6 => {a: "-", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-      5 => {a: "-", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-      4 => {a: "-", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-      3 => {a: "-", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-      2 => {a: "-", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-      1 => {a: "-", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"}
+      6 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+      5 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+      4 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+      3 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+      2 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+      1 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"}
     }
   end
   # Displays the board in a presentable way
@@ -19,11 +19,11 @@ class Board
     puts "       CONNECT FOUR"
 
     @board.each do |k, v|
-      puts "| #{v[:a]} | #{v[:b]} | #{v[:c]} | #{v[:d]} | #{v[:e]} | #{v[:f]} | #{v[:g]} |"
+      puts "| #{v[1]} | #{v[2]} | #{v[3]} | #{v[4]} | #{v[5]} | #{v[6]} | #{v[7]} |"
       puts "☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩☩"
     end
 
-    puts "  A ☩ B ☩ C ☩ D ☩ E ☩ F ☩ G"
+    puts "  1 ☩ 2 ☩ 3 ☩ 4 ☩ 5 ☩ 6 ☩ 7"
   end
 end
 # UpdateBoard alters a Board object by first letting one pick a column 'a-g'
@@ -39,8 +39,8 @@ class UpdateBoard
   def pick_column
     loop do
       puts "Enter the letter of the column to drop your checker in:  "
-      @choice = gets.chomp.downcase.to_sym
-      break if @choice.match?(/^[a-g]$/)
+      @choice = gets.chomp.to_i
+      break if @choice.to_s.match?(/^[1-7]$/)
     end
   end
 # helper method for drop_checker

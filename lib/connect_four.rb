@@ -1,6 +1,19 @@
+class CheckWin
+  def check_down
+  end
+
+  def check_side
+  end
+
+  def check_diag
+  end
+
+  def check_reverse_diag
+  end
+end
 # The game will be played over the Board object, which will hold Pieces
 # I am currently using a nested hash for the board but this could change
-class Board
+class Board < CheckWin
   attr_accessor :board
   # Each row is a number 1-6
   # Each column is a letter a-g

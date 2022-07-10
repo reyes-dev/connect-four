@@ -99,3 +99,81 @@ describe PlayGame do
     end
   end
 end
+
+describe CheckWin do
+  describe '#check_down' do
+    context 'When the board has a four-in-a-row downward' do
+      subject(:board) { Board.new }
+
+      it 'Returns true' do
+        board.board = {
+          6 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          5 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          4 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          3 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          2 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          1 => {1 => "X", 2 => "O", 3 => "O", 4 => "O", 5 => "-", 6 => "-", 7 => "-"}
+        }
+        result = board.check_down
+        expect(result).to be true
+      end
+    end
+  end
+
+  describe '#check_side' do
+    context 'When the board has a four-in-a-row sideways' do
+      subject(:board) { Board.new }
+
+      it 'Returns true' do
+        board.board = {
+          6 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          5 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          4 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          3 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          2 => {1 => "O", 2 => "O", 3 => "O", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          1 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "-", 6 => "-", 7 => "-"}
+        }
+        result = board.check_down
+        expect(result).to be true
+      end
+    end
+  end
+
+  describe '#check_diag' do
+    context 'When the board has a four-in-a-row diagonally' do
+      subject(:board) { Board.new }
+      
+      it 'Returns true' do
+        board.board = {
+          6 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          5 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          4 => {1 => "-", 2 => "-", 3 => "-", 4 => "X", 5 => "-", 6 => "-", 7 => "-"},
+          3 => {1 => "-", 2 => "-", 3 => "X", 4 => "O", 5 => "-", 6 => "-", 7 => "-"},
+          2 => {1 => "O", 2 => "X", 3 => "O", 4 => "X", 5 => "-", 6 => "-", 7 => "-"},
+          1 => {1 => "X", 2 => "X", 3 => "O", 4 => "O", 5 => "-", 6 => "-", 7 => "-"}
+        }
+        result = board.check_down
+        expect(result).to be true
+      end
+    end
+  end
+
+  describe '#check_reverse_diag' do
+    context' When the board has a four-in-a-row reverse diag' do
+      subject(:board) { Board.new }
+
+      it 'Returns true' do
+        board.board = {
+          6 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          5 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+          4 => {1 => "-", 2 => "-", 3 => "-", 4 => "X", 5 => "-", 6 => "-", 7 => "-"},
+          3 => {1 => "-", 2 => "-", 3 => "-", 4 => "X", 5 => "X", 6 => "-", 7 => "-"},
+          2 => {1 => "-", 2 => "-", 3 => "-", 4 => "O", 5 => "X", 6 => "X", 7 => "-"},
+          1 => {1 => "-", 2 => "-", 3 => "O", 4 => "O", 5 => "O", 6 => "O", 7 => "X"}
+        }
+        result = board.check_down
+        expect(result).to be true
+      end
+    end
+  end
+end

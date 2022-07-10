@@ -91,5 +91,4 @@ class PlayGame
     end
   end
 end
-
-game = PlayGame.new.play(Board.new, UpdateBoard.new)
+#game = PlayGame.new.play(Board.new, UpdateBoard.new)

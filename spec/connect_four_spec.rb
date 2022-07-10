@@ -7,19 +7,19 @@ describe UpdateBoard do
 
       it 'Replaces the value of the lowest unnocupied spot ' do
         new_board = Board.new
-        board_update.choice = :a
+        board_update.choice = 1
         board_update.drop_checker(new_board, 'X')
-        changed_board = new_board.board[1][:a]
+        changed_board = new_board.board[1][1]
         expect(changed_board).to eq('X')
       end
 
       it 'Will not replace an already occupied spot' do
         new_board = Board.new
-        board_update.choice = :a
+        board_update.choice = 1
         board_update.drop_checker(new_board, 'X')
         board_update.drop_checker(new_board, 'O')
-        changed_x = new_board.board[1][:a]
-        changed_o = new_board.board[2][:a]
+        changed_x = new_board.board[1][1]
+        changed_o = new_board.board[2][1]
         expect(changed_x).to eq('X')
         expect(changed_o).to eq('O')
       end
@@ -30,16 +30,16 @@ describe UpdateBoard do
         it 'Will not change the board' do
           new_board = Board.new
           new_board.board = {
-            6 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-            5 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-            4 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-            3 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-            2 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"},
-            1 => {a: "X", b: "-", c: "-", d: "-", e: "-", f: "-", g: "-"}
+            6 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+            5 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+            4 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+            3 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+            2 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
+            1 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"}
           }
-          column_is_full.choice = :a
+          column_is_full.choice = 1
           column_is_full.drop_checker(new_board, 'O')
-          changed_to_o = new_board.board[6][:a]
+          changed_to_o = new_board.board[6][1]
           expect(changed_to_o).not_to eq('O')
           expect(changed_to_o).to eq('X')
         end
@@ -54,7 +54,8 @@ describe PlayGame do
 
     context 'When @game_over is true' do
       it 'Exits the loop' do
-        result = win_loop.play
+        win_loop.game_over = true
+        result = win_loop.play(Board.new, UpdateBoard.new)
         expect(result).to be_nil
       end
     end
@@ -67,12 +68,12 @@ describe PlayGame do
       it 'Returns true' do
         new_board = Board.new
         new_board.board = {
-          6 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          5 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          4 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          3 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          2 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          1 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"}
+          6 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          5 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          4 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          3 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          2 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          1 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"}
         }
         board = new_board.board
         result = full_play.full_board?(board)
@@ -84,12 +85,12 @@ describe PlayGame do
       it 'Returns false' do
         new_board = Board.new
         new_board.board = {
-          6 => {a: "-", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          5 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          4 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          3 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          2 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          1 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"}
+          6 => {1 => "-", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          5 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          4 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          3 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          2 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"},
+          1 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "X", 6 => "X", 7 => "X"}
         }
         board = new_board.board
         result = full_play.full_board?(board)

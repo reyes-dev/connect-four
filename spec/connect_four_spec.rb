@@ -144,7 +144,7 @@ describe CheckWin do
   describe '#check_diag' do
     context 'When the board has a four-in-a-row diagonally' do
       subject(:board) { Board.new }
-      
+
       it 'Returns true' do
         board.board = {
           6 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
@@ -154,8 +154,10 @@ describe CheckWin do
           2 => {1 => "O", 2 => "X", 3 => "O", 4 => "X", 5 => "-", 6 => "-", 7 => "-"},
           1 => {1 => "X", 2 => "X", 3 => "O", 4 => "O", 5 => "-", 6 => "-", 7 => "-"}
         }
-        result = board.check_diag
-        expect(result).to be true
+        expect(board.check_diag(1, 1, 'X')).to be true
+        expect(board.check_diag(2, 2, 'X')).to be true
+        expect(board.check_diag(3, 3, 'X')).to be true
+        expect(board.check_diag(4, 4, 'X')).to be true
       end
     end
   end

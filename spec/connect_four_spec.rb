@@ -114,7 +114,7 @@ describe CheckWin do
           2 => {1 => "X", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
           1 => {1 => "X", 2 => "O", 3 => "O", 4 => "O", 5 => "-", 6 => "-", 7 => "-"}
         }
-        result = board.check_down
+        result = board.check_down(4, 1, 'X')
         expect(result).to be true
       end
     end
@@ -133,7 +133,7 @@ describe CheckWin do
           2 => {1 => "O", 2 => "O", 3 => "O", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
           1 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "-", 6 => "-", 7 => "-"}
         }
-        result = board.check_down
+        result = board.check_side
         expect(result).to be true
       end
     end
@@ -152,7 +152,7 @@ describe CheckWin do
           2 => {1 => "O", 2 => "X", 3 => "O", 4 => "X", 5 => "-", 6 => "-", 7 => "-"},
           1 => {1 => "X", 2 => "X", 3 => "O", 4 => "O", 5 => "-", 6 => "-", 7 => "-"}
         }
-        result = board.check_down
+        result = board.check_diag
         expect(result).to be true
       end
     end
@@ -171,7 +171,7 @@ describe CheckWin do
           2 => {1 => "-", 2 => "-", 3 => "-", 4 => "O", 5 => "X", 6 => "X", 7 => "-"},
           1 => {1 => "-", 2 => "-", 3 => "O", 4 => "O", 5 => "O", 6 => "O", 7 => "X"}
         }
-        result = board.check_down
+        result = board.check_reverse_diag
         expect(result).to be true
       end
     end

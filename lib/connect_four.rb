@@ -1,5 +1,20 @@
 class CheckWin
-  def check_down
+  attr_accessor :checkers
+
+  def initialize
+    @checkers = []
+  end
+  # Starting from the coordinates of the last placed checker
+  # It stores each value one spot downwards three times
+  # Then checks that array for matching values
+  def check_down(x, y, turn)
+    if x > 3 && x < 7
+      @checkers << @board[x][y]
+      @checkers << @board[x - 1][y]
+      @checkers << @board[x - 2][y]
+      @checkers << @board[x - 3][y]
+      result = @checkers.all?(turn)
+    end
   end
 
   def check_side
@@ -18,6 +33,7 @@ class Board < CheckWin
   # Each row is a number 1-6
   # Each column is a letter a-g
   def initialize
+    super
     @board = {
       6 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
       5 => {1 => "-", 2 => "-", 3 => "-", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
@@ -100,8 +116,11 @@ class PlayGame
       board.display_board
       updater.pick_column
       updater.drop_checker(board, @turn)
+      @game_over = true if board.check_down(updater.i, updater.choice, @turn)
+      board.checkers.clear
       switch_turn unless updater.i > 6
     end
+    board.display_board
   end
 end
-#game = PlayGame.new.play(Board.new, UpdateBoard.new)
+# game = PlayGame.new.play(Board.new, UpdateBoard.new)

@@ -33,16 +33,16 @@ describe PlayGame do
 
     context 'When @game_over is true' do
       it 'Exits the loop' do
-        win_loop.game_over = true
-        expect(win_loop.play).to be_nil
+        result = win_loop.play
+        expect(result).to be_nil
       end
     end
   end
 
   describe '#full_board?' do
-    subject(:full_board) { described_class.new }
+    subject(:full_play) { described_class.new }
 
-    context 'When all board hash values are X' do
+    context "When none of the board hash values are still '-'" do
       it 'Returns true' do
         new_board = Board.new
         new_board.board = {
@@ -53,7 +53,9 @@ describe PlayGame do
           2 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
           1 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"}
         }
-        expect(full_board).to be_full_board
+        board = new_board.board
+        result = full_play.full_board?(board)
+        expect(result).to be true
       end
     end
 
@@ -61,14 +63,16 @@ describe PlayGame do
       it 'Returns false' do
         new_board = Board.new
         new_board.board = {
-          6 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
+          6 => {a: "-", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
           5 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
           4 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
           3 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
           2 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"},
-          1 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "-"}
+          1 => {a: "X", b: "X", c: "X", d: "X", e: "X", f: "X", g: "X"}
         }
-        expect(full_board).not_to be_full_board
+        board = new_board.board
+        result = full_play.full_board?(board)
+        expect(result).to be false
       end
     end
   end

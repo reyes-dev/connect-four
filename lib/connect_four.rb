@@ -66,6 +66,8 @@ end
 # The PlayGame class starts loop where the game is actually played
 # It holds state for whose turn it is and if the game is over or not
 class PlayGame
+  attr_accessor :turn, :game_over
+
   def initialize
     @turn = 'X'
     @game_over = false
@@ -77,5 +79,11 @@ class PlayGame
     until game_over do
       @game_over = true
     end
+  end
+
+  def full_board?(board)
+    arr = []
+    board.each { |k, v| v.each { |k, v| arr << v } }
+    !arr.any?('-')
   end
 end

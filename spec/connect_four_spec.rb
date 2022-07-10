@@ -133,8 +133,10 @@ describe CheckWin do
           2 => {1 => "O", 2 => "O", 3 => "O", 4 => "-", 5 => "-", 6 => "-", 7 => "-"},
           1 => {1 => "X", 2 => "X", 3 => "X", 4 => "X", 5 => "-", 6 => "-", 7 => "-"}
         }
-        result = board.check_side
-        expect(result).to be true
+        expect(board.check_side(1, 1, 'X')).to be true
+        expect(board.check_side(1, 2, 'X')).to be true
+        expect(board.check_side(1, 3, 'X')).to be true
+        expect(board.check_side(1, 4, 'X')).to be true
       end
     end
   end

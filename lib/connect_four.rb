@@ -13,11 +13,53 @@ class CheckWin
       @checkers << @board[x - 1][y]
       @checkers << @board[x - 2][y]
       @checkers << @board[x - 3][y]
-      result = @checkers.all?(turn)
+      @checkers.all?(turn)
     end
   end
 
-  def check_side
+  def check_first_side(x, y, turn)
+    @checkers << @board[x][y]
+    @checkers << @board[x][y + 1]
+    @checkers << @board[x][y + 2]
+    @checkers << @board[x][y + 3]
+    @checkers.all?(turn)
+  end
+
+  def check_second_side(x, y, turn)
+    @checkers << @board[x][y]
+    @checkers << @board[x][y - 1]
+    @checkers << @board[x][y + 1]
+    @checkers << @board[x][y + 2]
+    @checkers.all?(turn)
+  end
+
+  def check_third_side(x, y, turn)
+    @checkers << @board[x][y]
+    @checkers << @board[x][y - 1]
+    @checkers << @board[x][y - 2]
+    @checkers << @board[x][y + 1]
+    @checkers.all?(turn)
+  end
+
+  def check_fourth_side(x, y, turn)
+    @checkers << @board[x][y]
+    @checkers << @board[x][y - 1]
+    @checkers << @board[x][y - 2]
+    @checkers << @board[x][y - 3]
+    @checkers.all?(turn)
+  end
+
+  def check_side(x, y, turn)
+    arr = []
+    arr << check_first_side(x, y, turn)
+    @checkers.clear
+    arr << check_second_side(x, y, turn)
+    @checkers.clear
+    arr << check_third_side(x, y, turn)
+    @checkers.clear
+    arr << check_fourth_side(x, y, turn)
+    @checkers.clear
+    arr.any?(true)
   end
 
   def check_diag
@@ -118,6 +160,7 @@ class PlayGame
       updater.drop_checker(board, @turn)
       @game_over = true if board.check_down(updater.i, updater.choice, @turn)
       board.checkers.clear
+      @game_over = true if board.check_side(updater.i, updater.choice, @turn)
       switch_turn unless updater.i > 6
     end
     board.display_board

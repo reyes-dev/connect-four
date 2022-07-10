@@ -175,8 +175,10 @@ describe CheckWin do
           2 => {1 => "-", 2 => "-", 3 => "-", 4 => "O", 5 => "X", 6 => "X", 7 => "-"},
           1 => {1 => "-", 2 => "-", 3 => "O", 4 => "O", 5 => "O", 6 => "O", 7 => "X"}
         }
-        result = board.check_reverse_diag
-        expect(result).to be true
+        expect(board.check_reverse_diag(4, 4, 'X')).to be true
+        expect(board.check_reverse_diag(3, 5, 'X')).to be true
+        expect(board.check_reverse_diag(2, 6, 'X')).to be true
+        expect(board.check_reverse_diag(1, 7, 'X')).to be true
       end
     end
   end

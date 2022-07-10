@@ -18,35 +18,43 @@ class CheckWin
   end
 
   def check_first_side(x, y, turn)
-    @checkers << @board[x][y]
-    @checkers << @board[x][y + 1]
-    @checkers << @board[x][y + 2]
-    @checkers << @board[x][y + 3]
-    @checkers.all?(turn)
+    if y < 5
+      @checkers << @board[x][y]
+      @checkers << @board[x][y + 1]
+      @checkers << @board[x][y + 2]
+      @checkers << @board[x][y + 3]
+      @checkers.all?(turn)
+    end
   end
 
   def check_second_side(x, y, turn)
-    @checkers << @board[x][y]
-    @checkers << @board[x][y - 1]
-    @checkers << @board[x][y + 1]
-    @checkers << @board[x][y + 2]
-    @checkers.all?(turn)
+    if y > 1 && y < 6
+      @checkers << @board[x][y]
+      @checkers << @board[x][y - 1]
+      @checkers << @board[x][y + 1]
+      @checkers << @board[x][y + 2]
+      @checkers.all?(turn)
+    end
   end
 
   def check_third_side(x, y, turn)
-    @checkers << @board[x][y]
-    @checkers << @board[x][y - 1]
-    @checkers << @board[x][y - 2]
-    @checkers << @board[x][y + 1]
-    @checkers.all?(turn)
+    if y > 2 && y < 7
+      @checkers << @board[x][y]
+      @checkers << @board[x][y - 1]
+      @checkers << @board[x][y - 2]
+      @checkers << @board[x][y + 1]
+      @checkers.all?(turn)
+    end
   end
 
   def check_fourth_side(x, y, turn)
-    @checkers << @board[x][y]
-    @checkers << @board[x][y - 1]
-    @checkers << @board[x][y - 2]
-    @checkers << @board[x][y - 3]
-    @checkers.all?(turn)
+    if y > 3
+      @checkers << @board[x][y]
+      @checkers << @board[x][y - 1]
+      @checkers << @board[x][y - 2]
+      @checkers << @board[x][y - 3]
+      @checkers.all?(turn)
+    end
   end
 
   def check_side(x, y, turn)
@@ -115,7 +123,57 @@ class CheckWin
     arr.any?(true)
   end
 
-  def check_reverse_diag
+  def check_first_reverse_diag(x, y, turn)
+    if x > 3 && y < 5
+      @checkers << @board[x][y]
+      @checkers << @board[x - 1][y + 1]
+      @checkers << @board[x - 2][y + 2]
+      @checkers << @board[x - 3][y + 3]
+      @checkers.all?(turn)
+    end
+  end
+
+  def check_second_reverse_diag(x, y, turn)
+    if x > 2 && y < 6 && x < 6 && y > 1
+      @checkers << @board[x][y]
+      @checkers << @board[x + 1][y - 1]
+      @checkers << @board[x - 1][y + 1]
+      @checkers << @board[x - 2][y + 2]
+      @checkers.all?(turn)
+    end
+  end
+
+  def check_third_reverse_diag(x, y, turn)
+    if x > 1 && y < 7 && x < 5 && y > 2
+      @checkers << @board[x][y]
+      @checkers << @board[x + 1][y - 1]
+      @checkers << @board[x + 2][y - 2]
+      @checkers << @board[x - 1][y + 1]
+      @checkers.all?(turn)
+    end
+  end
+
+  def check_fourth_reverse_diag(x, y, turn)
+    if x < 4
+      @checkers << @board[x][y]
+      @checkers << @board[x + 1][y - 1]
+      @checkers << @board[x + 2][y - 2]
+      @checkers << @board[x + 3][y - 3]
+      @checkers.all?(turn)
+    end
+  end
+
+  def check_reverse_diag(x, y, turn)
+    arr = []
+    arr << check_first_reverse_diag(x, y, turn)
+    @checkers.clear
+    arr << check_second_reverse_diag(x, y, turn)
+    @checkers.clear
+    arr << check_third_reverse_diag(x, y, turn)
+    @checkers.clear
+    arr << check_fourth_reverse_diag(x, y, turn)
+    @checkers.clear
+    arr.any?(true)
   end
 end
 # The game will be played over the Board object, which will hold Pieces
@@ -213,9 +271,12 @@ class PlayGame
       @game_over = true if board.check_side(updater.i, updater.choice, @turn)
       board.checkers.clear
       @game_over = true if board.check_diag(updater.i, updater.choice, @turn)
+      board.checkers.clear
+      @game_over = true if board.check_reverse_diag(updater.i, updater.choice, @turn)
       switch_turn unless updater.i > 6
     end
     board.display_board
   end
 end
+
 game = PlayGame.new.play(Board.new, UpdateBoard.new)

@@ -29,7 +29,7 @@ end
 # UpdateBoard alters a Board object by first letting one pick a column 'a-g'
 # And then replacing the value of the lowest unoccupied row spot
 class UpdateBoard
-  attr_accessor :choice
+  attr_accessor :choice, :i
 
   def initialize
     @choice = ""
@@ -46,12 +46,17 @@ class UpdateBoard
 # helper method for drop_checker
   def increment_row(board)
     @i = 1
-    @i = @i + 1 until board.board[@i][@choice] == '-' || @i == 6
+    until board.board[@i][@choice] == '-' do
+      @i = @i + 1
+      break if @i > 6
+    end
   end
 # drop_checker uses @choice to alter a single slot in the board
   def drop_checker(board, turn)
     increment_row(board)
-    board.board[@i][@choice] = turn unless board.board[@i][@choice] != '-'
+    if @i <= 6
+      board.board[@i][@choice] = turn unless board.board[@i][@choice] != '-'
+    end
   end
 end
 # The PlayGame class starts loop where the game is actually played
@@ -61,15 +66,8 @@ class PlayGame
 
   def initialize
     @turn = 'X'
+    @next_turn = 'O'
     @game_over = false
-  end
-  # play only stops when there's a consecutive-four or a full board
-  # It calls the methods that take input, switch turn, displays board 
-  # and alters a board slot
-  def play
-    until game_over do
-      @game_over = true
-    end
   end
   # Checks if the board is full
   def full_board?(board)
@@ -77,4 +75,21 @@ class PlayGame
     board.each { |k, v| v.each { |k, v| arr << v } }
     !arr.any?('-')
   end
+  # Switches checker from 'X' to 'O' and vice versa
+  def switch_turn
+    @turn, @next_turn = @next_turn, @turn
+  end
+  # play only stops when there's a consecutive-four or a full board
+  # It calls the methods that take input, switch turn, displays board 
+  # and alters a board slot
+  def play(board, updater)
+    until game_over || full_board?(board.board) do
+      board.display_board
+      updater.pick_column
+      updater.drop_checker(board, @turn)
+      switch_turn unless updater.i > 6
+    end
+  end
 end
+
+game = PlayGame.new.play(Board.new, UpdateBoard.new)
